@@ -35,15 +35,13 @@ function Shopping() {
             {cart.length > 0 && (
               <button 
                 onClick={() => setOpen(true)} 
-                className='bg-orange-y hover:opacity-90 text-white font-medium text-xs py-1 px-2.5 rounded shadow-sm transition-opacity cursor-pointer flex items-center gap-1'
+                className='bg-arbat-green hover:opacity-90 text-white font-medium text-xs py-1 px-2.5 rounded shadow-sm transition-opacity cursor-pointer flex items-center gap-1 hover:bg-arbat-hover'
               >
                 <span>{t("clear_cart")}</span>
                 <HiOutlineTrash size={14} />
               </button>
             )}
           </div>
-
-          {/* Sepeti Temizle Onay PopUp */}
           <Popup open={Open} setOpen={setOpen}>
             <div className='outline-none shadow-lg bg-white rounded h-auto'>
               <div className='pt-6 pb-4 px-4'>
