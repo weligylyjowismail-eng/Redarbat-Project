@@ -151,7 +151,7 @@ function ProductDetails() {
               <div className='lg:block hidden'>
                 <div className='sm:px-4 px-1 py-2 border-t mt-4 border-gray-200 border-b justify-between items-center flex'>
                   <div className='text-2xl font-bold'>
-                    <div className='relative'>
+                    <div className='relative sm:block justify-center items-center flex sm:flex-col'>
                       <span className='mx-0.5 w-max'>
                         {(Number(product?.price) - (Number(product.price) / 100 * Number(product?.discount))).toFixed(2) + 'm.'}
                       </span>
