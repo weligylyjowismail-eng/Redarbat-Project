@@ -12,6 +12,7 @@ import Shopping from "./pages/Shopping"
 import Favorites from "./pages/Favorites"
 import Category from "./pages/Category"
 import { useState } from "react";
+import Search from "./components/Header/Search";
 // import Search from "./components/Header/Search";
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
         <Route path="/Shopping" element={<Shopping />}/>
         <Route path="/Favorites" element={<Favorites />}/>
         <Route path="/BrandsPage" element={<BrandsPage />}/>
-        {/* <Route path="/Search" element={<Search />} /> */}
+        <Route path="/Search" element={<Search />} />
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import Language from "./Language"
 import { HiOutlineHeart, HiOutlineLocationMarker, HiOutlineUser, HiSearch } from "react-icons/hi"
 import { IoCartOutline, IoEnterOutline, IoPersonAddOutline } from "react-icons/io5"
@@ -26,11 +26,12 @@ function Navbar() {
   const [openRegister, setOpenRegister] = useState(false)
   const { user } = useAuthStore();
   const [aramaMetni, setAramaMetni] = useState("")
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      console.log(event.currentTarget.value);
-    }
-  };
+  const navigate = useNavigate()
+ const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  if (e.key === 'Enter' && aramaMetni.trim() !== '') {
+    navigate(`/search?q=${encodeURIComponent(aramaMetni)}`)
+  }
+}
 
   return (
     <div className='sticky top-0 z-20 w-full flex justify-center bg-white border-b border-gray-100'>
@@ -76,7 +77,7 @@ function Navbar() {
             <Link to={"/Brands"} className='text-gray-600 py-1 px-3.5 rounded-lg items-center hover:bg-gray-y duration-150 cursor-pointer flex'><span className="mr-1"><MdLayers /></span><span>{t("brands")}</span></Link>
           </div>
           <div className='lg:flex hidden justify-center w-full relative'>
-            <input onKeyDown={handleKeyDown} type="text" placeholder={t("Search-product")} className='py-2 px-4 rounded-lg bg-gray-y w-full outline-none h-9' />
+            <input onKeyDown={handleKeyDown} value={aramaMetni} onChange={(e) => setAramaMetni(e.target.value)} type="text" placeholder={t("Search-product")} className='py-2 px-4 rounded-lg bg-gray-y w-full outline-none h-9' />
             <div className="absolute right-3 top-1">
               <button><HiOutlineMagnifyingGlass className="text-2xl cursor-pointer" /></button>
             </div>

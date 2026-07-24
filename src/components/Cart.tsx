@@ -47,7 +47,7 @@ function Cart({ data }: { data?: dataT }) {
           </div>
           <div className='flex flex-col'>
             <h4 className='py-2 font-medium text-[#361537]'>{(data?.[`name_${currentLang}` as keyof dataT] as string) || "Ýüklenýär"}</h4>
-            <p className='pb-1 text-[#361537] text-sm'>{(data?.[`minibody_${currentLang}` as keyof dataT] as string) || "Ýüklenýär"}</p>
+            <p className='flex-grow pb-3.5 text-xs sm:text-sm md:text-xs lg:pb-1.5 lg:text-sm'>{(data?.[`minibody_${currentLang}` as keyof dataT] as string) || "Ýüklenýär"}</p>
           </div>
         </Link>
         <div className='mt-auto pt-2'>
@@ -87,16 +87,16 @@ function Cart({ data }: { data?: dataT }) {
                   setopenbut4(true);
                 }
               }}
-              className='bg-arbat-green py-2 rounded h-9 flex-grow flex justify-center items-center text-white hover:bg-arbat-hover transition-colors z-10 cursor-pointer'
+              className='bg-arbat-green rounded h-9 flex-grow flex justify-center items-center text-white hover:bg-arbat-hover transition-colors z-10 cursor-pointer overflow-hidden'
             >
               {openbut4 ? (
                 <div className='flex items-center h-full w-full justify-between'>
-                  <span className='px-2' onClick={(e) => { e.stopPropagation(); azalt(); }}><HiOutlineChevronLeft color='white' size={24} /></span>
+                  <span className='px-1.5' onClick={(e) => { e.stopPropagation(); azalt(); }}><HiOutlineChevronLeft color='white' size={20} /></span>
                   <span className='font-bold text-sm py-1 px-1.5 flex justify-center grow items-center'>
                     <span>{productQuantity}</span>
                     <span className='md:inline-block md:ml-1 hidden'>sany</span>
                   </span>
-                  <span className='px-2' onClick={(e) => { e.stopPropagation(); data && addToCart(data) }}><HiOutlineChevronRight color='white' size={24} /></span>
+                  <span className='px-1.5' onClick={(e) => { e.stopPropagation(); data && addToCart(data) }}><HiOutlineChevronRight color='white' size={20} /></span>
                 </div>
               ) : (
                 <HiOutlineShoppingCart size={20} />
