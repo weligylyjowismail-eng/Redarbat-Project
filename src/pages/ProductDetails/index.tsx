@@ -89,7 +89,7 @@ function ProductDetails() {
                   <div className='text-[#361537] font-semibold text-sm'>0004</div>
                 </div>
               </div>
-              <div className='lg:hidden bg-white flex items-center justify-between w-full px-1 py-3 border-t border-gray-200 mt-4'>
+              <div className='lg:hidden bg-white flex items-center justify-between w-full px-1 py-3 border-t border-gray-200 mt-4 sticky bottom-16'>
                 <div className='flex flex-col justify-center'>
                   <span className='text-xl font-bold text-[#361537] leading-none'>
                     {(Number(product?.price) - (Number(product.price) / 100 * Number(product?.discount))).toFixed(2) + 'm.'}
@@ -117,7 +117,7 @@ function ProductDetails() {
                     </svg>
                   </button>
 
-                  <div className='h-[42px] w-36'>
+                  <div className='w-30 h-10 rounded sm:w-40'>
                     <button
                       onClick={() => {
                         setopenbut4(true);
