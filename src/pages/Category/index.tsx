@@ -5,17 +5,26 @@ import { useTranslation } from 'react-i18next'
 import Sidebar from '../../components/Sidebar'
 import CartContainer from '../../components/CartContainer'
 
-function index() {
-  const {id} = useParams()
-  const [data,setData] = useState([])
-  const [len,setLen] = useState(0)
-  const [category,setCategory] = useState(null)
-  const [subcategories,setSubcategories] = useState([])
+function Category() {
+  const { id } = useParams()
+  const [data, setData] = useState<any[]>([])
+  const [len, setLen] = useState(0)
+  const [category, setCategory] = useState<any>(null)
+  const [subcategories, setSubcategories] = useState([])
   const { t, i18n } = useTranslation()
-  const [brands,setBrands]=useState([])
-  window.scrollTo(0,0)
-  useEffect(()=>{
-    const getData = async()=>{
+  const [brands, setBrands] = useState<any[]>([])
+  const [selectedSubcat, setSelectedSubcat] = useState<number | null>(null)
+
+  const [isBrandDrawerOpen, setIsBrandDrawerOpen] = useState(false)
+  const [brandSearchQuery, setBrandSearchQuery] = useState('')
+
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false)
+  const [sortOption, setSortOption] = useState<'default' | 'asc' | 'desc'>('default')
+
+  window.scrollTo(0, 0)
+
+  useEffect(() => {
+    const getData = async () => {
       try {
         const res = await api.get(`/category/${id}?limit=20&offset=0`)
         setData(res.data.data)
@@ -24,36 +33,246 @@ function index() {
         setCategory(res2.data)
         const res3 = await api.get(`/categories/${id}/subcategories/`)
         setSubcategories(res3.data)
-        const res4=await api.get("/banners")
+        const res4 = await api.get("/banners")
         setBrands(res4.data)
-      } catch (error:any) {
+      } catch (error: any) {
         alert(error.message)
       }
     }
-    
+
     getData()
-  },[id])
+  }, [id])
+
+  const filteredBrands = brands.filter((brand: any) => {
+    const name = brand.title || brand.name || ''
+    return name.toLowerCase().includes(brandSearchQuery.toLowerCase())
+  })
+
+  const sortedData = [...data].sort((a, b) => {
+    const priceA = a.price ?? a.sell_price ?? a.price_discount ?? 0
+    const priceB = b.price ?? b.sell_price ?? b.price_discount ?? 0
+
+    if (sortOption === 'asc') {
+      return priceA - priceB
+    }
+    if (sortOption === 'desc') {
+      return priceB - priceA
+    }
+    return 0
+  })
 
   return (
-    <div className='px-10 mx-auto container'>
-      <section className='pt-4 pb-2'>
-        <h1 className='lg:text-2xl lg:font-bold'>{category && category[`name_${i18n.language}` as keyof typeof category]}</h1>
-        <h6 className='text-sm text-gray-600 pl-2'>
-          jemi: 
-          <span className='font-medium mx-1'>
-            {len}
-          </span>
-          haritlar
-        </h6>
-      </section>
-      <section className='h-full flex pt-1'>
-        <Sidebar subcategories={subcategories} brands={brands}/>
-        <div className='lg:w-3/4 w-full p-2'>
-          <CartContainer title="" data={data} />
+    <>
+      <div className='block lg:hidden px-3 pt-2 pb-2 bg-white'>
+        <h1 className='text-[14px] font-bold text-gray-900 mb-2'>
+          {category && category[`name_${i18n.language}` as keyof typeof category]}
+        </h1>
+
+        <div className='border-t border-b border-gray-200 py-2 my-1 flex items-center justify-end gap-2'>
+          <div className='border border-gray-300 rounded-[10px] px-3 py-1 bg-white text-center shadow-2xs flex flex-col justify-center min-w-[80px]'>
+            <span className='text-[10px] font-bold text-gray-800 leading-none'>Jemi:</span>
+            <span className='text-[10px] text-gray-500 font-medium leading-tight mt-0.5'>
+              {len} haryt
+            </span>
+          </div>
+
+          <button 
+            onClick={() => setIsBrandDrawerOpen(true)}
+            className='flex items-center justify-center gap-1.5 text-[12px] font-semibold text-white bg-[#ff4500] hover:bg-[#e03d00] px-3 py-2 rounded-[10px] shadow-2xs transition-colors'
+          >
+            <svg className="w-4 h-4 fill-current text-white" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+            <span className="text-white">Brend</span>
+          </button>
+
+          <button 
+            onClick={() => setIsFilterDrawerOpen(true)}
+            className='flex items-center justify-center gap-1.5 text-[12px] font-semibold text-white bg-[#ff4500] hover:bg-[#e03d00] px-3 py-2 rounded-[10px] shadow-2xs transition-colors'
+          >
+            <svg className="w-4 h-4 stroke-current fill-none text-white" viewBox="0 0 24 24" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+            <span className="text-white">Süzgüç</span>
+          </button>
         </div>
-      </section>
-    </div>
+
+        {subcategories && subcategories.length > 0 && (
+          <div className='flex items-center gap-2 overflow-x-auto no-scrollbar py-2'>
+            <button
+              onClick={() => setSelectedSubcat(null)}
+              className={`text-[11px] whitespace-nowrap px-3.5 py-1.5 rounded-full border transition-all ${
+                selectedSubcat === null
+                  ? 'bg-[#0d3b2e] text-white border-[#0d3b2e] font-medium'
+                  : 'bg-white text-gray-700 border-gray-300'
+              }`}
+            >
+              Ählisi
+            </button>
+            {subcategories.map((sub: any) => (
+              <button
+                key={sub.id}
+                onClick={() => setSelectedSubcat(sub.id)}
+                className={`text-[11px] whitespace-nowrap px-3.5 py-1.5 rounded-full border transition-all ${
+                  selectedSubcat === sub.id
+                    ? 'bg-[#0d3b2e] text-white border-[#0d3b2e] font-medium'
+                    : 'bg-white text-gray-700 border-gray-300'
+                }`}
+              >
+                {sub[`name_${i18n.language}`]}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className='pt-1'>
+          <CartContainer title="" data={sortedData} />
+        </div>
+      </div>
+
+      <div 
+        className={`fixed inset-0 bg-black/40 z-50 transition-opacity duration-300 lg:hidden ${
+          isBrandDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsBrandDrawerOpen(false)}
+      />
+
+      <div 
+        className={`fixed top-0 right-0 h-full w-[80%] max-w-[320px] bg-white z-50 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out lg:hidden ${
+          isBrandDrawerOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className='flex items-center justify-between px-4 py-3 border-b border-gray-100'>
+          <h3 className='text-sm font-bold text-gray-800'>Brend</h3>
+          <button 
+            onClick={() => setIsBrandDrawerOpen(false)}
+            className='text-red-500 hover:text-red-700 text-lg font-bold leading-none p-1'
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className='p-3 border-b border-gray-100'>
+          <input 
+            type="text"
+            placeholder="Gözleg"
+            value={brandSearchQuery}
+            onChange={(e) => setBrandSearchQuery(e.target.value)}
+            className='w-full border border-gray-300 rounded px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-[#0d3b2e] placeholder-gray-400'
+          />
+        </div>
+
+        <div className='flex-1 overflow-y-auto p-4 flex flex-col gap-3'>
+          {filteredBrands && filteredBrands.length > 0 ? (
+            filteredBrands.map((brand: any, index: number) => (
+              <label 
+                key={brand.id || index} 
+                className='flex items-center gap-3 text-xs text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'
+              >
+                <input 
+                  type="checkbox" 
+                  className='rounded border-gray-300 accent-[#0d3b2e] w-4 h-4'
+                />
+                <span className="text-gray-800">{brand.title || brand.name || brand[`name_${i18n.language}`]}</span>
+              </label>
+            ))
+          ) : (
+            <div className='text-center text-xs text-gray-400 py-6'>
+              Brend tapylmady
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div 
+        className={`fixed inset-0 bg-black/40 z-50 transition-opacity duration-300 lg:hidden ${
+          isFilterDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsFilterDrawerOpen(false)}
+      />
+
+      <div 
+        className={`fixed top-0 right-0 h-full w-[80%] max-w-[320px] bg-white z-50 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out lg:hidden ${
+          isFilterDrawerOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className='flex items-center justify-between px-4 py-3 border-b border-gray-100'>
+          <h3 className='text-sm font-bold text-gray-800'>Tertip</h3>
+          <button 
+            onClick={() => setIsFilterDrawerOpen(false)}
+            className='text-red-500 hover:text-red-700 text-lg font-bold leading-none p-1'
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className='p-4 flex flex-col gap-4'>
+          <label className='flex items-center gap-3 text-xs text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
+            <input 
+              type="radio" 
+              name="sort"
+              checked={sortOption === 'default'}
+              onChange={() => {
+                setSortOption('default')
+                setIsFilterDrawerOpen(false)
+              }}
+              className='accent-[#0d3b2e] w-4 h-4'
+            />
+            <span className="text-gray-800">Hiç hili</span>
+          </label>
+
+          <label className='flex items-center gap-3 text-xs text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
+            <input 
+              type="radio" 
+              name="sort"
+              checked={sortOption === 'asc'}
+              onChange={() => {
+                setSortOption('asc')
+                setIsFilterDrawerOpen(false)
+              }}
+              className='accent-[#0d3b2e] w-4 h-4'
+            />
+            <span className="text-gray-800">Arzandan gymmada</span>
+          </label>
+
+          <label className='flex items-center gap-3 text-xs text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
+            <input 
+              type="radio" 
+              name="sort"
+              checked={sortOption === 'desc'}
+              onChange={() => {
+                setSortOption('desc')
+                setIsFilterDrawerOpen(false)
+              }}
+              className='accent-[#0d3b2e] w-4 h-4'
+            />
+            <span className="text-gray-800">Gymmatdan arzana</span>
+          </label>
+        </div>
+      </div>
+
+      <div className='hidden lg:block px-10 mx-auto container'>
+        <section className='pt-4 pb-2'>
+          <h1 className='lg:text-2xl lg:font-bold text-gray-900'>
+            {category && category[`name_${i18n.language}` as keyof typeof category]}
+          </h1>
+          <h6 className='text-sm text-gray-600 pl-2'>
+            jemi: 
+            <span className='font-medium mx-1 text-gray-800'>
+              {len}
+            </span>
+            haritlar
+          </h6>
+        </section>
+        <section className='h-full flex pt-1'>
+          <Sidebar subcategories={subcategories} brands={brands}/>
+          <div className='lg:w-3/4 w-full p-2'>
+            <CartContainer title="" data={sortedData} />
+          </div>
+        </section>
+      </div>
+    </>
   )
 }
 
-export default index
+export default Category
