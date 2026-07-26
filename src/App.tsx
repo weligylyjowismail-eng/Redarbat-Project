@@ -13,6 +13,7 @@ import Favorites from "./pages/Favorites"
 import Category from "./pages/Category"
 import { useState } from "react";
 import Search from "./components/Header/Search";
+import Profil_responsive from "./components/Header/Profil_responsive";
 // import Search from "./components/Header/Search";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/Favorites" element={<Favorites />}/>
         <Route path="/BrandsPage" element={<BrandsPage />}/>
         <Route path="/Search" element={<Search />} />
+        <Route path="/Profil_responsive" element={<Profil_responsive />} />
       </Routes>
       <Footer />
     </BrowserRouter>

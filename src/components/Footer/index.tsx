@@ -82,7 +82,7 @@ function Footer() {
           <span className={"absolute bottom-0 left-0 w-full h-[3px] bg-arbat-hover rounded-t-sm transition-all duration-300 ease-in-out " + (active === 3 ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0")}></span>
         </Link>
         <Link 
-          to="/Profil" 
+          to="/Profil_responsive" 
           onClick={() => setActive(4)}
           className={`h-full flex flex-col justify-center items-center pb-1 relative transition-colors duration-200 ${
             active === 4 ? "text-emerald-700 font-semibold" : "text-gray-400 hover:text-gray-600"

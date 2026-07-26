@@ -115,5 +115,16 @@
 "home": "Главная",
   "Brands": "Бренды",
   "Shopping": "Корзина",
-  "favorites": "Избранное"
+  "favorites": "Избранное",
+  "total": "Всего",
+  "products": "товаров",
+  "brand": "Бренд",
+  "filter": "Фильтр",
+  "all": "Все",
+  "search": "Поиск",
+  "brandNotFound": "Бренд не найден",
+  "sort": "Сортировка",
+  "defaultSort": "По умолчанию",
+  "priceAsc": "Сначала дешевые",
+  "priceDesc": "Сначала дорогие"
 }

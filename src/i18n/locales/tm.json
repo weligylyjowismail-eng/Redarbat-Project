@@ -105,5 +105,15 @@
 "home": "Baş sahypa",
   "Brands": "Brendler", 
   "Shopping": "Sebet",
-  "favorites": "Halanlarym"
+  "favorites": "Halanlarym",
+  "total": "Jemi",
+  "products": "haryt",
+  "filter": "Süzgüç",
+  "all": "Ählisi",
+  "search": "Gözleg",
+  "brandNotFound": "Brend tapylmady",
+  "sort": "Tertip",
+  "defaultSort": "Hiç hili",
+  "priceAsc": "Arzandan gymmada",
+  "priceDesc": "Gymmatdan arzana"
 }

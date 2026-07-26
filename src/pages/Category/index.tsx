@@ -70,30 +70,30 @@ function Category() {
 
         <div className='border-t border-b border-gray-200 py-2 my-1 flex items-center justify-end gap-2'>
           <div className='border border-gray-300 rounded-[10px] px-3 py-1 bg-white text-center shadow-2xs flex flex-col justify-center min-w-[80px]'>
-            <span className='text-[10px] font-bold text-gray-800 leading-none'>Jemi:</span>
+            <span className='text-[10px] font-bold text-gray-800 leading-none'>{t("total")}</span>
             <span className='text-[10px] text-gray-500 font-medium leading-tight mt-0.5'>
-              {len} haryt
+              {len} {t("products")}
             </span>
           </div>
 
           <button 
             onClick={() => setIsBrandDrawerOpen(true)}
-            className='flex items-center justify-center gap-1.5 text-[12px] font-semibold text-white bg-[#ff4500] hover:bg-[#e03d00] px-3 py-2 rounded-[10px] shadow-2xs transition-colors'
+            className='flex items-center justify-center gap-1.5 text-[12px] font-semibold text-white bg-arbat-green hover:bg-arbat-hover px-3 py-2 rounded-[10px] shadow-2xs transition-colors'
           >
             <svg className="w-4 h-4 fill-current text-white" viewBox="0 0 24 24">
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
-            <span className="text-white">Brend</span>
+            <span className="text-white">{t("Brands")}</span>
           </button>
 
           <button 
             onClick={() => setIsFilterDrawerOpen(true)}
-            className='flex items-center justify-center gap-1.5 text-[12px] font-semibold text-white bg-[#ff4500] hover:bg-[#e03d00] px-3 py-2 rounded-[10px] shadow-2xs transition-colors'
+            className='flex items-center justify-center gap-1.5 text-[12px] font-semibold text-white bg-arbat-green hover:bg-arbat-hover px-3 py-2 rounded-[10px] shadow-2xs transition-colors'
           >
             <svg className="w-4 h-4 stroke-current fill-none text-white" viewBox="0 0 24 24" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
             </svg>
-            <span className="text-white">Süzgüç</span>
+            <span className="text-white">{t("filter")}</span>
           </button>
         </div>
 
@@ -143,7 +143,7 @@ function Category() {
         }`}
       >
         <div className='flex items-center justify-between px-4 py-3 border-b border-gray-100'>
-          <h3 className='text-sm font-bold text-gray-800'>Brend</h3>
+          <h3 className='text-sm font-bold text-gray-800'>{t("Brands")}</h3>
           <button 
             onClick={() => setIsBrandDrawerOpen(false)}
             className='text-red-500 hover:text-red-700 text-lg font-bold leading-none p-1'
@@ -155,7 +155,7 @@ function Category() {
         <div className='p-3 border-b border-gray-100'>
           <input 
             type="text"
-            placeholder="Gözleg"
+            placeholder={t("search")}
             value={brandSearchQuery}
             onChange={(e) => setBrandSearchQuery(e.target.value)}
             className='w-full border border-gray-300 rounded px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-[#0d3b2e] placeholder-gray-400'
@@ -218,7 +218,7 @@ function Category() {
               }}
               className='accent-[#0d3b2e] w-4 h-4'
             />
-            <span className="text-gray-800">Hiç hili</span>
+            <span className="text-gray-800">{t("defaultSort")}</span>
           </label>
 
           <label className='flex items-center gap-3 text-xs text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
@@ -232,7 +232,7 @@ function Category() {
               }}
               className='accent-[#0d3b2e] w-4 h-4'
             />
-            <span className="text-gray-800">Arzandan gymmada</span>
+            <span className="text-gray-800">{t("priceAsc")}</span>
           </label>
 
           <label className='flex items-center gap-3 text-xs text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
@@ -246,7 +246,7 @@ function Category() {
               }}
               className='accent-[#0d3b2e] w-4 h-4'
             />
-            <span className="text-gray-800">Gymmatdan arzana</span>
+            <span className="text-gray-800">{t("priceDesc")}</span>
           </label>
         </div>
       </div>

@@ -92,6 +92,17 @@
 "home": "Home",
   "Brands": "Brands",
   "Shopping": "Cart",
-  "favorites": "Favorites"
+  "favorites": "Favorites",
+  "total": "Total",
+  "products": "products",
+  "brand": "Brand",
+  "filter": "Filter",
+  "all": "All",
+  "search": "Search",
+  "brandNotFound": "Brand not found",
+  "sort": "Sort",
+  "defaultSort": "Default",
+  "priceAsc": "Price: Low to High",
+  "priceDesc": "Price: High to Low"
       
 }
