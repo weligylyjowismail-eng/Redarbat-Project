@@ -2,19 +2,16 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-// Modal bileşenin
+// Modallar
 import Register from './Register' 
+import Login from './Login'
+import ChangeLanguage_responsive from './ChangeLanguage_responsive'
 
-import marketImg from '../../assets/images/ynamdar-market.png'
-import storeImg from '../../assets/images/ynamdar-store.png'
-import foodImg from '../../assets/images/ynamdar-food.png'
-
-function Profil_responsive() {
+function ProfilResponsive() {
   const { t } = useTranslation()
-
-  // Modalların açık/kapalı durumunu yöneten stateler
   const [isRegisterOpen, setIsRegisterOpen] = useState(false)
   const [isLanguageOpen, setIsLanguageOpen] = useState(false)
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
 
   const menuItems = [
     {
@@ -32,7 +29,7 @@ function Profil_responsive() {
       id: 2,
       titleKey: 'Login',
       defaultText: 'Içeri gir',
-      path: '/login',
+      action: () => setIsLoginOpen(true),
       icon: (
         <svg className="w-5 h-5 stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="1.8">
           <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
@@ -64,7 +61,8 @@ function Profil_responsive() {
     {
       id: 5,
       titleKey: 'changeLanguage',
-      defaultText: 'changeLanguage',
+      defaultText: 'Dil çalyşmak',
+      action: () => setIsLanguageOpen(true),
       icon: (
         <svg className="w-5 h-5 stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="1.8">
           <path strokeLinecap="round" strokeLinejoin="round" d="M3 5h12M9 3v2m1 4h6m-3-1v8m-4-4l4 4m6 0l-4-4M3 19h18" />
@@ -121,7 +119,7 @@ function Profil_responsive() {
             </>
           )
 
-          const itemClassName = "flex items-center gap-3.5 px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#ff4500] hover:bg-gray-50 active:scale-[0.99] transition-all shadow-2xs w-full text-left"
+          const itemClassName = "flex items-center gap-3.5 px-4 py-3 bg-white border border-gray-200 rounded-xl text-[#ff4500] hover:bg-gray-50 active:scale-[0.99] transition-all shadow-xs w-full text-left"
 
           if (item.action) {
             return (
@@ -150,8 +148,16 @@ function Profil_responsive() {
         open={isRegisterOpen} 
         setOpen={setIsRegisterOpen} 
       />
+      <Login 
+        open={isLoginOpen} 
+        setOpen={setIsLoginOpen} 
+      />
+      <ChangeLanguage_responsive 
+        open={isLanguageOpen} 
+        setOpen={setIsLanguageOpen} 
+      />
     </div>
   )
 }
 
-export default Profil_responsive
+export default ProfilResponsive

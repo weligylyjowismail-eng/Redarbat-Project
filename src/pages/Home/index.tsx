@@ -8,13 +8,15 @@ import { api } from '../../api/api'
 import type { bannerT } from '../../types/banner'
 import type { CategoryT } from '../../types/Category'
 
-function index() {
+function Index() {
   const { id } = useParams()
-  const { t } = useTranslation()
-  const { i18n } = useTranslation();
-  const currentLang = i18n.language;
-  const [data, setData] = useState([])
+  // Hook kullanımını tek satıra indirgedik
+  const { t, i18n } = useTranslation()
+  const currentLang = i18n.language
+
+  const [data, setData] = useState<CategoryT[]>([])
   const [bannerData, setBannerData] = useState<bannerT[]>([])
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -30,6 +32,7 @@ function index() {
 
     getData()
   }, [id])
+
   return (
     <div className='container mx-auto px-10'>
       <Banner data={bannerData} />
@@ -39,13 +42,24 @@ function index() {
           <span className='font-semibold text-sm'>Mobile programmany al</span>
         </section>
       </Link>
-      {
-        data.map((category: CategoryT) => {
-          if (category.products && category.products?.length > 0) return(<CartContainer key={"home-page-category-products-" + category.id} data={category.products} title={(category?.[`name_${currentLang}` as keyof CategoryT] as string) || "Ýüklenýär"} link={category.id} Style="py-4 mt-2" />)
-        })
-      }
+      {data.map((category: CategoryT, index: number) => {
+        if (!category.products || category.products.length === 0) return null
+
+        const categoryTitle = (category?.[`name_${currentLang}` as keyof CategoryT] as string) || "Ýüklenýär"
+        const uniqueKey = category.id ? `home-page-category-${category.id}` : `home-page-category-idx-${index}`
+
+        return (
+          <CartContainer 
+            key={uniqueKey} 
+            data={category.products} 
+            title={categoryTitle} 
+            link={category.id} 
+            Style="py-4 mt-2" 
+          />
+        )
+      })}
     </div>
   )
 }
 
-export default index
+export default Index

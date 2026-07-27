@@ -24,6 +24,7 @@ function Navbar() {
   const [open, setOpen] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
   const [openRegister, setOpenRegister] = useState(false)
+  const [openLogin, setOpenLogin] = useState(false)
   const { user } = useAuthStore();
   const [aramaMetni, setAramaMetni] = useState("")
   const navigate = useNavigate()
@@ -57,7 +58,7 @@ function Navbar() {
               <h1 className='text-lg text-orange-y text-center mb-2'>Şäher saýlaň: </h1>
               <div className='flex flex-col w-70'>
                 <div className='py-1 w-full '>
-                  <Link className='duration-150 py-2.5 px-4 bg-[#ec63231a] rounded-lg items-center cursor-pointer w-full flex hover:bg-[#ec632326]' to={"/food"}>
+                  <Link className='duration-150 py-2.5 px-4 bg-[#23ec271a] rounded-lg items-center cursor-pointer w-full flex hover:bg-[#23ec2d26]' to={"#"} onClick={()=>(setOpen(false))}>
                     <span className='mr-2'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
                       <circle cx="12" cy="10" r="3"></circle>
@@ -93,7 +94,7 @@ function Navbar() {
                   <button onClick={() => setOpen(true)} className='text-gray-600 py-1 px-3.5 rounded-lg items-center hover:bg-gray-y duration-150 cursor-pointer flex '><span className="mr-1"><IoEnterOutline className="text-2xl" /></span><span className="w-max">{t("Login")}</span></button>
                 </div>
                 <div className="w-px h-8 bg-gray-300 lg:block hidden"></div>
-                <Login open={open} setOpen={setOpen} />
+                <Login open={openLogin} setOpen={setOpenLogin} />
                 <div className="lg:flex items-center  hidden">
                   <button onClick={() => setOpenRegister(true)} className='text-gray-600 py-1 px-3.5 rounded-lg items-center hover:bg-gray-y duration-150 cursor-pointer flex '><span className="mr-1"><IoPersonAddOutline className="text-2xl" /></span><span className="w-max">{t("Register")}</span></button>
                 </div>

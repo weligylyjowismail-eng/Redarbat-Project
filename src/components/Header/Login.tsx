@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { api } from '../../api/api';
 import { useAuthStore } from '../../store/Store';
+
 function Login({ open, setOpen }: {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -16,6 +17,7 @@ function Login({ open, setOpen }: {
   const [Telefon, setTelefon] = useState("+993")
   const [Email, setEmail] = useState("")
   const [password, setpassword] = useState("")
+
   async function sendData() {
     const data = {
       phone: Telefon,
@@ -46,11 +48,13 @@ function Login({ open, setOpen }: {
       }
     }
   }
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       sendData();
     }
   };
+
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputVal = event.target.value;
     if (!inputVal.startsWith("+993")) {
@@ -65,7 +69,12 @@ function Login({ open, setOpen }: {
 
   return (
     <Popup open={open} setOpen={setOpen} >
-      <div className="shadow-lg bg-white w-100 relative lg:block hidden z-50">
+      {/* 
+        lg:block hidden kaldırıldı (Mobilde görünmesi için).
+        w-[90vw] max-w-[380px] eklendi (Telefondan sağa-sola taşmaması için).
+        max-h-[90vh] overflow-y-auto eklendi (Küçük dikey ekranlarda taşarsa kendi içinde kayması için).
+      */}
+      <div className="shadow-lg bg-white w-[90vw] max-w-[380px] max-h-[90vh] overflow-y-auto rounded-lg relative z-50 mx-auto">
         <button onClick={() => setOpen(false)} className="absolute right-3 top-1 cursor-pointer">x</button>
         <div className="p-4">
           <h2 className="text-xl font-medium mb-2">{t("login_button")}</h2>
